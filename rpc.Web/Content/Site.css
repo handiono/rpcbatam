@@ -22,3 +22,42 @@ select,
 textarea {
     max-width: 280px;
 }
+.column{
+    margin : 10px;
+    height : 60px;
+    width : 170px;
+
+    border-radius:8px;
+    -moz-border-radius: 8px;
+    -webkit-box-shadow: inset 8px 0px 0px 0px rgba(7,145,219,1);
+    -moz-box-shadow: inset 8px 0px 0px -1px rgba(7,145,219,1);
+    box-shadow: inset 8px -3px -3px 5px rgba(7,145,219,1);
+    border: 1px solid #1774d6;
+    text-align: center;
+    cursor: move;
+}
+[draggable] {
+  -moz-user-select: none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
+  /* Required to make elements draggable in old WebKit */
+  -khtml-user-drag: element;
+  -webkit-user-drag: element;
+}
+.JobBox{
+    width:200px; 
+    float:left; 
+    height:380px; 
+    background:#d4cece;
+    margin:2px; 
+    overflow:auto;
+}
+.Job-panel {
+    display: inline-block;
+    padding: 8px;
+	width: 200px;
+    vertical-align: top;
+	background-color: #fff;
+	border-radius: 3px;
+}
