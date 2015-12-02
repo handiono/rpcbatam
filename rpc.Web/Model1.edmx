@@ -1,0 +1,380 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="RPC_DBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Employees">
+          <Key>
+            <PropertyRef Name="EmployeeID" />
+          </Key>
+          <Property Name="EmployeeID" Type="nchar" MaxLength="25" Nullable="false" />
+          <Property Name="Name" Type="nchar" MaxLength="40" Nullable="false" />
+          <Property Name="Manager" Type="nchar" MaxLength="25" Nullable="false" />
+          <Property Name="Shed" Type="nchar" MaxLength="10" />
+          <Property Name="Description" Type="ntext" />
+        </EntityType>
+        <EntityType Name="JobAssigns">
+          <Key>
+            <PropertyRef Name="JobAssignID" />
+          </Key>
+          <Property Name="JobAssignID" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="LeaderID" Type="nchar" MaxLength="25" Nullable="false" />
+          <Property Name="WorkID" Type="nchar" MaxLength="10" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Jobs">
+          <Key>
+            <PropertyRef Name="JobID" />
+          </Key>
+          <Property Name="JobID" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="JobName" Type="ntext" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ManHours">
+          <Key>
+            <PropertyRef Name="ManHoursID" />
+          </Key>
+          <Property Name="ManHoursID" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="EmployeeID" Type="nchar" MaxLength="25" Nullable="false" />
+          <Property Name="WorkID" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="ManHour" Type="int" Nullable="false" />
+          <Property Name="Date" Type="date" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Works">
+          <Key>
+            <PropertyRef Name="WorkID" />
+          </Key>
+          <Property Name="WorkID" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="WorkName" Type="ntext" Nullable="false" />
+          <Property Name="JobID" Type="nchar" MaxLength="10" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_JobAssign_Employee">
+          <End Role="Employees" Type="Self.Employees" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="JobAssigns" Type="Self.JobAssigns" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employees">
+              <PropertyRef Name="EmployeeID" />
+            </Principal>
+            <Dependent Role="JobAssigns">
+              <PropertyRef Name="LeaderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_JobAssign_Works">
+          <End Role="Works" Type="Self.Works" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="JobAssigns" Type="Self.JobAssigns" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Works">
+              <PropertyRef Name="WorkID" />
+            </Principal>
+            <Dependent Role="JobAssigns">
+              <PropertyRef Name="WorkID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ManHours_Employees">
+          <End Role="Employees" Type="Self.Employees" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="ManHours" Type="Self.ManHours" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employees">
+              <PropertyRef Name="EmployeeID" />
+            </Principal>
+            <Dependent Role="ManHours">
+              <PropertyRef Name="EmployeeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ManHours_Works">
+          <End Role="Works" Type="Self.Works" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="ManHours" Type="Self.ManHours" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Works">
+              <PropertyRef Name="WorkID" />
+            </Principal>
+            <Dependent Role="ManHours">
+              <PropertyRef Name="WorkID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Works_Jobs">
+          <End Role="Jobs" Type="Self.Jobs" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Works" Type="Self.Works" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Jobs">
+              <PropertyRef Name="JobID" />
+            </Principal>
+            <Dependent Role="Works">
+              <PropertyRef Name="JobID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="RPC_DBModelStoreContainer">
+          <EntitySet Name="Employees" EntityType="Self.Employees" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="JobAssigns" EntityType="Self.JobAssigns" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Jobs" EntityType="Self.Jobs" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ManHours" EntityType="Self.ManHours" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Works" EntityType="Self.Works" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_JobAssign_Employee" Association="Self.FK_JobAssign_Employee">
+            <End Role="Employees" EntitySet="Employees" />
+            <End Role="JobAssigns" EntitySet="JobAssigns" />
+          </AssociationSet>
+          <AssociationSet Name="FK_JobAssign_Works" Association="Self.FK_JobAssign_Works">
+            <End Role="Works" EntitySet="Works" />
+            <End Role="JobAssigns" EntitySet="JobAssigns" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ManHours_Employees" Association="Self.FK_ManHours_Employees">
+            <End Role="Employees" EntitySet="Employees" />
+            <End Role="ManHours" EntitySet="ManHours" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ManHours_Works" Association="Self.FK_ManHours_Works">
+            <End Role="Works" EntitySet="Works" />
+            <End Role="ManHours" EntitySet="ManHours" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Works_Jobs" Association="Self.FK_Works_Jobs">
+            <End Role="Jobs" EntitySet="Jobs" />
+            <End Role="Works" EntitySet="Works" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="RPC_DBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Employee">
+          <Key>
+            <PropertyRef Name="EmployeeID" />
+          </Key>
+          <Property Name="EmployeeID" Type="String" MaxLength="25" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="40" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="Manager" Type="String" MaxLength="25" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="Shed" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="JobAssigns" Relationship="Self.FK_JobAssign_Employee" FromRole="Employees" ToRole="JobAssigns" />
+          <NavigationProperty Name="ManHours" Relationship="Self.FK_ManHours_Employees" FromRole="Employees" ToRole="ManHours" />
+        </EntityType>
+        <EntityType Name="JobAssign">
+          <Key>
+            <PropertyRef Name="JobAssignID" />
+          </Key>
+          <Property Name="JobAssignID" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="LeaderID" Type="String" MaxLength="25" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="WorkID" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Employee" Relationship="Self.FK_JobAssign_Employee" FromRole="JobAssigns" ToRole="Employees" />
+          <NavigationProperty Name="Work" Relationship="Self.FK_JobAssign_Works" FromRole="JobAssigns" ToRole="Works" />
+        </EntityType>
+        <EntityType Name="Job">
+          <Key>
+            <PropertyRef Name="JobID" />
+          </Key>
+          <Property Name="JobID" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="JobName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Works" Relationship="Self.FK_Works_Jobs" FromRole="Jobs" ToRole="Works" />
+        </EntityType>
+        <EntityType Name="ManHour">
+          <Key>
+            <PropertyRef Name="ManHoursID" />
+          </Key>
+          <Property Name="ManHoursID" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="EmployeeID" Type="String" MaxLength="25" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="WorkID" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="ManHour1" Type="Int32" Nullable="false" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="0" />
+          <NavigationProperty Name="Employee" Relationship="Self.FK_ManHours_Employees" FromRole="ManHours" ToRole="Employees" />
+          <NavigationProperty Name="Work" Relationship="Self.FK_ManHours_Works" FromRole="ManHours" ToRole="Works" />
+        </EntityType>
+        <EntityType Name="Work">
+          <Key>
+            <PropertyRef Name="WorkID" />
+          </Key>
+          <Property Name="WorkID" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="WorkName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="JobID" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="JobAssigns" Relationship="Self.FK_JobAssign_Works" FromRole="Works" ToRole="JobAssigns" />
+          <NavigationProperty Name="Job" Relationship="Self.FK_Works_Jobs" FromRole="Works" ToRole="Jobs" />
+          <NavigationProperty Name="ManHours" Relationship="Self.FK_ManHours_Works" FromRole="Works" ToRole="ManHours" />
+        </EntityType>
+        <Association Name="FK_JobAssign_Employee">
+          <End Role="Employees" Type="Self.Employee" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="JobAssigns" Type="Self.JobAssign" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employees">
+              <PropertyRef Name="EmployeeID" />
+            </Principal>
+            <Dependent Role="JobAssigns">
+              <PropertyRef Name="LeaderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ManHours_Employees">
+          <End Role="Employees" Type="Self.Employee" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="ManHours" Type="Self.ManHour" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employees">
+              <PropertyRef Name="EmployeeID" />
+            </Principal>
+            <Dependent Role="ManHours">
+              <PropertyRef Name="EmployeeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_JobAssign_Works">
+          <End Role="Works" Type="Self.Work" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="JobAssigns" Type="Self.JobAssign" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Works">
+              <PropertyRef Name="WorkID" />
+            </Principal>
+            <Dependent Role="JobAssigns">
+              <PropertyRef Name="WorkID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Works_Jobs">
+          <End Role="Jobs" Type="Self.Job" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Works" Type="Self.Work" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Jobs">
+              <PropertyRef Name="JobID" />
+            </Principal>
+            <Dependent Role="Works">
+              <PropertyRef Name="JobID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ManHours_Works">
+          <End Role="Works" Type="Self.Work" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="ManHours" Type="Self.ManHour" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Works">
+              <PropertyRef Name="WorkID" />
+            </Principal>
+            <Dependent Role="ManHours">
+              <PropertyRef Name="WorkID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="RPC_DBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Employees" EntityType="Self.Employee" />
+          <EntitySet Name="JobAssigns" EntityType="Self.JobAssign" />
+          <EntitySet Name="Jobs" EntityType="Self.Job" />
+          <EntitySet Name="ManHours" EntityType="Self.ManHour" />
+          <EntitySet Name="Works" EntityType="Self.Work" />
+          <AssociationSet Name="FK_JobAssign_Employee" Association="Self.FK_JobAssign_Employee">
+            <End Role="Employees" EntitySet="Employees" />
+            <End Role="JobAssigns" EntitySet="JobAssigns" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ManHours_Employees" Association="Self.FK_ManHours_Employees">
+            <End Role="Employees" EntitySet="Employees" />
+            <End Role="ManHours" EntitySet="ManHours" />
+          </AssociationSet>
+          <AssociationSet Name="FK_JobAssign_Works" Association="Self.FK_JobAssign_Works">
+            <End Role="Works" EntitySet="Works" />
+            <End Role="JobAssigns" EntitySet="JobAssigns" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Works_Jobs" Association="Self.FK_Works_Jobs">
+            <End Role="Jobs" EntitySet="Jobs" />
+            <End Role="Works" EntitySet="Works" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ManHours_Works" Association="Self.FK_ManHours_Works">
+            <End Role="Works" EntitySet="Works" />
+            <End Role="ManHours" EntitySet="ManHours" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="RPC_DBModelStoreContainer" CdmEntityContainer="RPC_DBEntities">
+          <EntitySetMapping Name="Employees">
+            <EntityTypeMapping TypeName="RPC_DBModel.Employee">
+              <MappingFragment StoreEntitySet="Employees">
+                <ScalarProperty Name="EmployeeID" ColumnName="EmployeeID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Manager" ColumnName="Manager" />
+                <ScalarProperty Name="Shed" ColumnName="Shed" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="JobAssigns">
+            <EntityTypeMapping TypeName="RPC_DBModel.JobAssign">
+              <MappingFragment StoreEntitySet="JobAssigns">
+                <ScalarProperty Name="JobAssignID" ColumnName="JobAssignID" />
+                <ScalarProperty Name="LeaderID" ColumnName="LeaderID" />
+                <ScalarProperty Name="WorkID" ColumnName="WorkID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Jobs">
+            <EntityTypeMapping TypeName="RPC_DBModel.Job">
+              <MappingFragment StoreEntitySet="Jobs">
+                <ScalarProperty Name="JobID" ColumnName="JobID" />
+                <ScalarProperty Name="JobName" ColumnName="JobName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ManHours">
+            <EntityTypeMapping TypeName="RPC_DBModel.ManHour">
+              <MappingFragment StoreEntitySet="ManHours">
+                <ScalarProperty Name="ManHoursID" ColumnName="ManHoursID" />
+                <ScalarProperty Name="EmployeeID" ColumnName="EmployeeID" />
+                <ScalarProperty Name="WorkID" ColumnName="WorkID" />
+                <ScalarProperty Name="ManHour1" ColumnName="ManHour" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Works">
+            <EntityTypeMapping TypeName="RPC_DBModel.Work">
+              <MappingFragment StoreEntitySet="Works">
+                <ScalarProperty Name="WorkID" ColumnName="WorkID" />
+                <ScalarProperty Name="WorkName" ColumnName="WorkName" />
+                <ScalarProperty Name="JobID" ColumnName="JobID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
