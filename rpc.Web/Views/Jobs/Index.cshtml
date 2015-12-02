@@ -1,0 +1,35 @@
+﻿@model IEnumerable<rpc.Web.Job>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<td>
+    <h4>
+        @Html.ActionLink("List Of Job", "Index") |
+        @Html.ActionLink("Add New Job", "Create") |
+        @Html.ActionLink("List Of Work Center","ListOfwork")
+
+    </h4>
+</td><br />
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.JobName)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.JobName)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.JobID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.JobID })
+        </td>
+    </tr>
+}
+
+</table>
