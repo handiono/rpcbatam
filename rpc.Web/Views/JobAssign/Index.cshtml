@@ -1,0 +1,70 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+@Styles.Render("~/Content/css")
+<link href="~/Content/Site.css" rel="stylesheet" />
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="~/Scripts/jquery-ui-latest.js"></script>
+<script src="~/Scripts/jquery.layout-latest.js"></script>
+<script>
+    $(document).ready(function() {
+        $('body').layout({ applyDefaultStyles: true });
+    });
+    function allowDrop(ev) {
+        ev.preventDefault();
+    }
+    function drag(ev) {
+        ev.dataTransfer.setData("text", ev.target.id);
+    }
+    function drop(ev, loc) {
+        ev.preventDefault();
+        var data = ev.dataTransfer.getData("text");
+        ev.target.appendChild(document.getElementById(data));
+        //$('#myModal').modal('show');
+    }
+</script>
+<style>
+    @{var x = 208;
+      var a = x * 4;
+      var u = a + "px";
+      }
+    
+</style>
+
+
+<h2>Index</h2>
+<div class="body-content">
+    <div ondrop="drop(event,'Column1')" ondragover="allowDrop(event)" class="JobBox">
+        Job Assign
+        <div class="column" draggable="true">
+            column 1
+        </div>
+        <div class="column" draggable="true">
+            column 2
+        </div>
+        <div class="column" draggable="true">
+            column 3
+        </div>
+    </div>
+</div>
+<div ondrop="drop(event,'Column1')" ondragover="allowDrop(event)" class="JobBox"> Leader 1
+   @*<div class="column" draggable="true">
+        
+    </div>*@
+</div>
+
+<div ondrop="drop(event,'Column1')" ondragover="allowDrop(event)" class="JobBox">
+    Leader 2
+    @*<div class="column" draggable="true">
+
+    </div>*@
+</div>
+
+<div ondrop="drop(event,'Column1')" ondragover="allowDrop(event)" class="JobBox">
+    Leader 3
+    @*<div class="column" draggable="true">
+
+        </div>*@
+</div>
+

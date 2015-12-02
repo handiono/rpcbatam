@@ -1,0 +1,116 @@
+﻿@model IEnumerable<rpc.Web.Employee>
+
+@{
+    ViewBag.Title = "List of employee";
+}
+
+<script>
+(function(document) {
+
+
+	var tableFilter = (function(Arr) {
+
+		var _input;
+
+		function _onInputEvent(e) {
+			_input = e.target;
+			var tables = document.getElementsByClassName(_input.getAttribute('data-table'));
+			Arr.forEach.call(tables, function(table) {
+				Arr.forEach.call(table.tBodies, function(tbody) {
+					Arr.forEach.call(tbody.rows, _filter);
+				});
+			});
+		}
+
+		function _filter(row) {
+			var text = row.textContent.toLowerCase(), val = _input.value.toLowerCase();
+			row.style.display = text.indexOf(val) === -1 ? 'none' : 'table-row';
+		}
+
+		return {
+			init: function() {
+				var inputs = document.getElementsByClassName('search');
+				Arr.forEach.call(inputs, function(input) {
+					input.oninput = _onInputEvent;
+				});
+			}
+		};
+	})(Array.prototype);
+
+	document.addEventListener('readystatechange', function() {
+		if (document.readyState === 'complete') {
+			tableFilter.init();
+		}
+	});
+
+})(document);
+
+
+</script>
+
+
+
+
+
+
+
+
+
+
+<td>
+    <h4>
+        @Html.ActionLink("List Of Employee", "Index") |
+        @Html.ActionLink("Add New Employee", "Create")
+    </h4>
+</td><br />
+Search <input type="search" data-table="order-table"  placeholder="Filter"  class="search"/>
+<br /> 
+<br />
+
+<table class="order-table table">
+    <tr> 
+       
+        <th>
+            @Html.DisplayNameFor(model => model.EmployeeID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Manager)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Shed)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Description)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.EmployeeID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Manager)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Shed)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Description)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.EmployeeID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.EmployeeID })
+        </td>
+    </tr>
+}
+
+</table>
+
