@@ -18,7 +18,11 @@ namespace rpc.Web.Controllers
         public ActionResult Index()
         {
             return View(db.Jobs.ToList());
+        
         }
+
+        
+
 
         // GET: Jobs/Details/5
         public ActionResult Details(string id)
@@ -57,10 +61,28 @@ namespace rpc.Web.Controllers
 
             return View(job);
         }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Create([Bind(Include = "JobID,WorkID,WorkName")] Work work)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Works.Add(work);
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+
+            return View(work);
+        }
 
         // GET: Jobs/Edit/5
         public ActionResult Edit(string id)
         {
+            string query = "SELECT * FROM WORKS WHERE JobID= '"+ id +"'";
+            IEnumerable<Work> data = db.Database.SqlQuery<Work>(query);
+            ViewBag.query = data.ToList();
+           
+
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -71,6 +93,23 @@ namespace rpc.Web.Controllers
                 return HttpNotFound();
             }
             return View(job);
+
+            
+
+        }
+
+        public ActionResult EditWork(string id)
+        {
+             if ( id == null)
+             {
+                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+             }
+             Work work = db.Works.Find(id);
+            if (work == null)
+            {
+                return HttpNotFound();
+            }
+            return View(work);
         }
 
         // POST: Jobs/Edit/5
@@ -102,6 +141,20 @@ namespace rpc.Web.Controllers
                 return HttpNotFound();
             }
             return View(job);
+        }
+
+        public ActionResult DeleteWorkCenter(string id)
+        {
+            if ( id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Work work = db.Works.Find(id);
+            if( work == null)
+            {
+                return HttpNotFound();
+            }
+            return View(work);
         }
 
         // POST: Jobs/Delete/5

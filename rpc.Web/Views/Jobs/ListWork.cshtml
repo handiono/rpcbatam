@@ -1,7 +1,7 @@
-﻿@model IEnumerable<rpc.Web.Job>
+﻿@model IEnumerable<rpc.Web.Work>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "ListWork";
 }
 <script>
 (function(document) {
@@ -52,7 +52,7 @@
     <h4>
         @Html.ActionLink("List Of Job", "Index") |
         @Html.ActionLink("Add New Job", "Create") |
-       
+        @Html.ActionLink("List Of Work Center", "ListWork")
 
     </h4>
 </td><br />
@@ -66,7 +66,10 @@ Search <input type="search" data-table="order-table" placeholder="Filter" class=
             @Html.DisplayNameFor(model => model.JobID)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.JobName)
+            @Html.DisplayNameFor(model => model.WorkID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.WorkName)
         </th>
         <th></th>
     </tr>
@@ -78,11 +81,15 @@ Search <input type="search" data-table="order-table" placeholder="Filter" class=
                 @Html.DisplayFor(modelitem => item.JobID)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.JobName)
+                @Html.DisplayFor(modelItem => item.WorkID)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.JobID }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.JobID })
+                @Html.DisplayFor(modelItem => item.WorkName)
+            </td>
+
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.WorkID }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.WorkID})
             </td>
         </tr>
     }

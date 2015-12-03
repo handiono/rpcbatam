@@ -1,8 +1,15 @@
 ﻿@model rpc.Web.Job
 
+
 @{
     ViewBag.Title = "Edit";
 }
+@{
+    ViewBag.Title = "ListWork";
+}
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+
 
 <h2>Edit</h2>
 
@@ -10,29 +17,112 @@
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <h4>Job</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.JobID)
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.JobName, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
+        <table>
+            <tr>
+                <th>
+                   JOB ID
+                </th>
+                <td></td>
+               
+
+                <th>
+                    @Html.DisplayFor(model => model.JobID)
+                </th>
+                <td></td>     
+            </tr>
+            <tr>
+                
+                <th>
+                    JOB NAME
+                </th>
+                <td></td>
+                <th>
                 @Html.EditorFor(model => model.JobName, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.JobName, "", new { @class = "text-danger" })
-            </div>
-        </div>
+                </th>
+            </tr>
+           </table>
+       
 
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
-            </div>
-        </div>
+        
     </div>
 }
 
+<input type="submit" value="Save" class="btn btn-default" /> <br />
+
+
+<br />
+
+<h5> @Html.ActionLink("List Work Center", "ListWork")</h5>
+<table class="table">
+    <tr>
+        <th> JOB ID </th>
+        <th> WORK CENTER ID </th>
+        <th> WORK CENTER NAME</th>
+    </tr>
+    <tr>
+      <td>
+        
+      </td>
+    </tr>
+
+   @foreach (var item in ViewBag.query)
+    {
+    <tr>
+        <td>
+            @item.JobID
+        </td>
+        <td>
+            @item.WorkID
+        </td>
+        <td>
+            @item.WorkName
+        </td>
+
+        <td>
+        <td>
+            @Html.ActionLink("Edit Work Center", "EditWork", new { id = item.WorkID }) |
+            @Html.ActionLink("Delete", "DeleteWorkCenter", new { id = item.WorkName })
+        </td>
+        
+
+
+    </tr>
+   }
+</table>
+<form role="form" action="" method="POST">
+    <div class="multi-field-wrapper">
+        <div class="multi-fields">
+            <div class="multi-field">
+               
+                Work ID <input type="text" name="workid">
+                Work Name <input type="text" name="workname">
+                <button type="button" class="btn btn-default">Save</button>
+                <button type="button" class="remove-field btn btn-default">Remove</button>           
+
+            </div>
+        </div>
+        <button type="button" class="add-field btn btn-default">Add field</button>
+    </div>
+</form>
+<script>
+    $('.multi-field-wrapper').each(function () {
+        var $wrapper = $('.multi-fields', this);
+        $(".add-field", $(this)).click(function (e) {
+            $('.multi-field:first-child', $wrapper).clone(true).appendTo($wrapper).find('input').val('').focus();
+        });
+        $('.multi-field .remove-field', $wrapper).click(function () {
+            if ($('.multi-field', $wrapper).length > 1)
+                $(this).parent('.multi-field').remove();
+        });
+    });
+</script>
 <div>
     @Html.ActionLink("Back to List", "Index")
 </div>
