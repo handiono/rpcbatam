@@ -48,43 +48,37 @@
 </script>
 
 
-<td>
-    <h4>
-        @Html.ActionLink("List Of Job", "Index") |
-        @Html.ActionLink("Add New Job", "Create") |
-       
+<h2>Index</h2>
 
-    </h4>
-</td><br />
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
 Search <input type="search" data-table="order-table" placeholder="Filter" class="search" />
 <br />
 <br />
 
 <table class="order-table table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.JobID)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.JobName)
-        </th>
-        <th></th>
-    </tr>
-
-    @foreach (var item in Model)
-    {
+   
         <tr>
-            <td>
-                @Html.DisplayFor(modelitem => item.JobID)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.JobName)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.JobID }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.JobID })
-            </td>
+            <th>
+                @Html.DisplayNameFor(model => model.JobName)
+            </th>
+            <th></th>
         </tr>
-    }
 
-</table>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.JobName)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.JobID }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.JobID }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.JobID })
+                </td>
+            </tr>
+        }
+
+    </table>
