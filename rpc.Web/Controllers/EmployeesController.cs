@@ -12,7 +12,7 @@ namespace rpc.Web.Controllers
 {
     public class EmployeesController : Controller
     {
-        private RPC_DBEntities db = new RPC_DBEntities();
+         private RPC_DBEntities db = new RPC_DBEntities();
 
         // GET: Employees
         public ActionResult Index()

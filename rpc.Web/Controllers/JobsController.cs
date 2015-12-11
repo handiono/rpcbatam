@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
-using System.Net;
+using System.Net; 
 using System.Web;
 using System.Web.Mvc;
 using rpc.Web;
@@ -137,7 +137,7 @@ namespace rpc.Web.Controllers
             ViewBag.JobID = new SelectList(db.Jobs, "JobID", "JobName", work.JobID);
             return RedirectToAction("Index");
         }
-        // GET: Jobs/Edit/5
+        // GET: Edit Work/Edit/5
 
         public ActionResult EditWork(string id)
         {
@@ -169,16 +169,32 @@ namespace rpc.Web.Controllers
             }
             return View(work);
         }
-        // POST: Work/Delete/5
+        // GET: Jobs/Delete/5
+        public ActionResult DeleteWork(string id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Work work = db.Works.Find(id);
+            if (work == null)
+            {
+                return HttpNotFound();
+            }
+            return View(work);
+        }
+
+        // POST: Jobs/Delete/5
         [HttpPost, ActionName("DeleteWork")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteWork(string id)
+        public ActionResult DeleteWorkConfirm(string id)
         {
             Work work = db.Works.Find(id);
             db.Works.Remove(work);
             db.SaveChanges();
             return RedirectToAction("Index");
         }
+
       
         protected override void Dispose(bool disposing)
         {

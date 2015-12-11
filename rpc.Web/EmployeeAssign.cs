@@ -12,13 +12,14 @@ namespace rpc.Web
     using System;
     using System.Collections.Generic;
     
-    public partial class JobAssign
+    public partial class EmployeeAssign
     {
-        public int JobAssignID { get; set; }
-        public string LeaderID { get; set; }
-        public string WorkID { get; set; }
+        public int EmployeeAssignID { get; set; }
+        public string EmployeeID { get; set; }
+        public string Leader { get; set; }
+        public System.DateTime StartDate { get; set; }
+        public System.DateTime EndDate { get; set; }
     
         public virtual Employee Employee { get; set; }
-        public virtual Work Work { get; set; }
     }
 }

@@ -18,6 +18,7 @@ namespace rpc.Web
         {
             this.JobAssigns = new HashSet<JobAssign>();
             this.ManHours = new HashSet<ManHour>();
+            this.EmployeeAssigns = new HashSet<EmployeeAssign>();
         }
     
         public string EmployeeID { get; set; }
@@ -28,5 +29,6 @@ namespace rpc.Web
     
         public virtual ICollection<JobAssign> JobAssigns { get; set; }
         public virtual ICollection<ManHour> ManHours { get; set; }
+        public virtual ICollection<EmployeeAssign> EmployeeAssigns { get; set; }
     }
 }

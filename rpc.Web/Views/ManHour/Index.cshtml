@@ -1,0 +1,53 @@
+﻿@model IEnumerable<rpc.Web.ManHour>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.EmployeeID)
+        </th>
+
+        <th>
+            @Html.DisplayNameFor(model => model.WorkID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Date)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ManHours)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.EmployeeID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.WorkID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Date)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ManHours)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.ManHoursID }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.ManHoursID })
+            </td>
+        </tr>
+    }
+
+</table>
+

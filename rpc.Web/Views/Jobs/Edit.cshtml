@@ -8,7 +8,7 @@
 
 <h2>Edit</h2>
 
-@using (Html.BeginForm())
+@using (Html.BeginForm()) 
 {
     @Html.AntiForgeryToken()
     
@@ -44,7 +44,7 @@
 
 <br />
 
-<h5> @Html.ActionLink("List Work Center", "ListWork")</h5>
+<h5>List Work Center</h5>
 <table class="table">
     <tr>
         <th> JOB ID </th>
@@ -52,7 +52,7 @@
         <th> WORK CENTER NAME</th>
     </tr>
     <tr>
-        <td></td>
+      
     </tr>
 
     @foreach (var item in ViewBag.query)
@@ -71,7 +71,7 @@
             <td>
             <td>
                 @Html.ActionLink("Edit Work Center", "EditWork", new { id = item.WorkID }) |
-                @Html.ActionLink("Delete", "DeleteWorkCenter", new { id = item.WorkID })
+                @Html.ActionLink("Delete", "DeleteWork", new { id = item.WorkID })
             </td>
 
 
@@ -81,33 +81,37 @@
 
 </table>
 
-<h5> ADD WORK CENTER</h5>
-@using (Html.BeginForm("Creatework","Jobs","POST"))
-{ 
-    @Html.AntiForgeryToken();
-    <div class="multi-field-wrapper">
-        <div class="multi-fields">
-            <div class="multi-field">
 
-                @Html.HiddenFor(model => model.JobID)
+    <h5> ADD WORK CENTER</h5>
+    @using (Html.BeginForm("Creatework", "Jobs", "POST"))
+    {
+        @Html.AntiForgeryToken();
+        <div class="multi-field-wrapper">
+            <div class="multi-fields">
+                <div class="multi-field">
+                    <div class="form-group">
+                        @Html.HiddenFor(model => model.JobID)
 
-                WORK ID <input class="form-control text-box single-line" id="WorkID" name="WorkID" type="text"  />
-                <span class="field-validation-valid text-danger" data-valmsg-for="WorkID" data-valmsg-replace="true"></span>
+                        WORK ID
+                        <input class="form-control text-box " id="WorkID" name="WorkID" type="text" />
+                        <span class="field-validation-valid text-danger" data-valmsg-for="WorkID" data-valmsg-replace="true"></span>
 
-                WORK NAME <input class="form-control text-box single-line" id="WorkName" name="WorkName" type="text" />   
-               <span class="field-validation-valid text-danger" data-valmsg-for="WorkName" data-valmsg-replace="true"></span>
+                        WORK NAME
+                        <input class="form-control text-box " id="WorkName" name="WorkName" type="text" />
+                        <span class="field-validation-valid text-danger" data-valmsg-for="WorkName" data-valmsg-replace="true"></span>
 
 
-               
-                <button type="button" class="remove-field btn btn-default">Remove</button>
+                        <button type="button" class="remove-field btn btn-default">Remove</button>
 
+                    </div>
+                </div>
             </div>
-        </div>
 
-        <button type="submit" class="btn btn-default">Save</button>
-        <button type="button" class="add-field btn btn-default">Add field</button>
-    </div>
-}
+            <button type="submit" class="btn btn-default">Save</button>
+            <button type="button" class="add-field btn btn-default">Add field</button>
+        </div>
+    }
+
 <script>
     $('.multi-field-wrapper').each(function () {
         var $wrapper = $('.multi-fields', this);
