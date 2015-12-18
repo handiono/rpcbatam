@@ -35,11 +35,12 @@ namespace rpc.Web.Controllers
                              select new { b.EmployeeID, id = b.EmployeeID });
             ViewBag.EmployeeID = new SelectList(selectemp.ToList(), "EmployeeID", "id");
 
+
             return View();
         }
         
         [HttpPost]
-        public ActionResult Create([Bind(Include="Date,WorkID,EmployeeID,ManHours")] ManHour manhour)
+        public ActionResult Create([Bind(Include="Date,WorkID,EmployeeID,ManHours,LeaderID")] ManHour manhour)
         {
             if (ModelState.IsValid)
             {
@@ -81,7 +82,7 @@ namespace rpc.Web.Controllers
        
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Date,WorkID,EmployeeID,ManHours")] ManHour manhour)
+        public ActionResult Edit([Bind(Include = "ManHoursID,Date,WorkID,EmployeeID,ManHours")] ManHour manhour)
         {
             if (ModelState.IsValid)
             {
@@ -89,32 +90,34 @@ namespace rpc.Web.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
+            
            
             return View(manhour);
         }
 
 
-        public ActionResult Delete(string id)
+        public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Job job = db.Jobs.Find(id);
-            if (job == null)
+            ManHour manhour = db.ManHours.Find(id);
+           
+            if (manhour == null)
             {
                 return HttpNotFound();
             }
-            return View(job);
+            return View(manhour);
         }
 
         
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(string id)
+        public ActionResult DeleteConfirmed(int id)
         {
-            Job job = db.Jobs.Find(id);
-            db.Jobs.Remove(job);
+            ManHour manhour = db.ManHours.Find(id);
+            db.ManHours.Remove(manhour);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

@@ -48,7 +48,7 @@
 </script>
 
 
-<h2>Index</h2>
+<h4>JOB </h4>
 
 
 <p>
@@ -62,20 +62,29 @@ Search <input type="search" data-table="order-table" placeholder="Filter" class=
    
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.JobName)
+               JOB ID
             </th>
-            <th></th>
+
+            <th>
+                JOB NAME
+            </th>
+            <th>
+
+            </th>
         </tr>
 
         @foreach (var item in Model)
         {
             <tr>
                 <td>
+                    @Html.DisplayFor(modelItem => item.JobID)
+                </td>
+                <td>
                     @Html.DisplayFor(modelItem => item.JobName)
                 </td>
                 <td>
                     @Html.ActionLink("Edit", "Edit", new { id = item.JobID }) |
-                    @Html.ActionLink("Details", "Details", new { id = item.JobID }) |
+                    @Html.ActionLink("Add WorkCenter", "workcenter", new { id = item.JobID }) |
                     @Html.ActionLink("Delete", "Delete", new { id = item.JobID })
                 </td>
             </tr>

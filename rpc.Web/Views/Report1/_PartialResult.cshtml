@@ -1,0 +1,46 @@
+﻿
+@model IEnumerable<rpc.Web.Models.Report1>
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th> JOB ID </th>
+            <th> WORK ID </th>
+            <th> OPERATOR ID </th>
+            <th> OPERATOR NAME </th>
+            <th> DATE </th>
+            <th> MAN HOURS </th>
+            <th> LEADER ID </th>
+            <th> LEADER NAME</th>
+        </tr>
+    </thead>
+
+
+
+
+
+
+
+
+
+  @foreach (var item in Model)
+    {
+
+            <tr>
+                <td>@item.JobID</td>
+                <td>@item.WorkID</td>
+                <td>@item.LeaderID</td>
+                <td>@item.EmployeeID</td>
+                <td>@item.Name</td>
+                <td>@item.Date</td>
+                <td>@item.ManHours</td>
+                <td>@item.LeaderName</td>
+                
+
+
+            </tr>
+
+    }
+</table>
+

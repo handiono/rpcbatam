@@ -19,6 +19,7 @@ namespace rpc.Web
         public string WorkID { get; set; }
         public int ManHours { get; set; }
         public System.DateTime Date { get; set; }
+        public string LeaderID { get; set; }
     
         public virtual Employee Employee { get; set; }
         public virtual Work Work { get; set; }

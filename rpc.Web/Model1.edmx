@@ -48,6 +48,7 @@
           <Property Name="EmployeeID" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="WorkID" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="ManHours" Type="int" Nullable="false" />
+          <Property Name="LeaderID" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Date" Type="date" Nullable="false" />
         </EntityType>
         <EntityType Name="Users">
@@ -219,6 +220,7 @@
           <Property Name="Date" Type="DateTime" Nullable="false" Precision="0" />
           <NavigationProperty Name="Employee" Relationship="Self.FK_ManHours_Employees" FromRole="ManHours" ToRole="Employees" />
           <NavigationProperty Name="Work" Relationship="Self.FK_ManHours_Works" FromRole="ManHours" ToRole="Works" />
+          <Property Name="LeaderID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Work">
           <Key>
@@ -404,6 +406,7 @@
           <EntitySetMapping Name="ManHours">
             <EntityTypeMapping TypeName="RPC_DBModel.ManHour">
               <MappingFragment StoreEntitySet="ManHours">
+                <ScalarProperty Name="LeaderID" ColumnName="LeaderID" />
                 <ScalarProperty Name="ManHours" ColumnName="ManHours" />
                 <ScalarProperty Name="ManHoursID" ColumnName="ManHoursID" />
                 <ScalarProperty Name="EmployeeID" ColumnName="EmployeeID" />
